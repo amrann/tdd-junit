@@ -8,4 +8,8 @@ public class Calculator {
       return first / second;
     }
   }
+
+  public Integer add(Integer first, Integer second) {
+    return first + second;
+  }
 }
