@@ -43,4 +43,21 @@ public class PersonServiceMockTest {
     Assertions.assertEquals("idMeran", person.getId());
     Assertions.assertEquals("Maruusy", person.getName());
   }
+
+  @Test
+  void testVerifySuccess() {
+    Person person = personService.register("Maruusy");
+    Assertions.assertNotNull(person); // ngecek person gk boleh null datanya
+    Assertions.assertEquals("Maruusy", person.getName());
+
+    // ngecek person harus punya id
+    // pada cases ini, idnya sudah dicreate random otomatis
+    Assertions.assertNotNull(person.getId());
+
+    // memastikan "insert" pada method register.PersonService, terpanggil
+    // memastikan "insert" pada method register.PersonService, cuman dijalankan sekali
+    // sehingga jika "insert" pada method register.PersonService ditulis 2x, maka akan muncul error
+    Mockito.verify(personRepository, Mockito.times(1))
+            .insert(new Person(person.getId(), "Maruusy"));
+  }
 }
